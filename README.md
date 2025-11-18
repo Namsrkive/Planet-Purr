@@ -1,7 +1,7 @@
 
 # Byte-Sized Impact
 
-## Introduction
+## Introduction to project
 
 The world faces complex, interconnected challenges like climate change, poverty, inequality, and social injustice. The United Nations Sustainable Development Goals (SDGs) provide a global blueprint for a more inclusive, sustainable, and just world. However, traditional approaches to education and awareness-raising often fail to engage young people.
 
