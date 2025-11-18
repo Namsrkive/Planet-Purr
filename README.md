@@ -24,3 +24,7 @@ Byte-Sized Impact leverages gamification and personalization to transform abstra
 ## Our Goal
 
 Inspire a new generation of global citizens to make a positive difference in the world.
+
+## Live Demo
+
+Check out the live application at [https://planet-purr.vercel.app/](https://planet-purr.vercel.app/)
