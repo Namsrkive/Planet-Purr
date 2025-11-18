@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 5 Math Game</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .box {
+            padding: 1.5rem;
+            margin: 5vh auto;
+            width: 75%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 10px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body {
+            text-align: center;
+            padding: 50px;
+            background: #f0f8ff;
+            font-family: "Nunito", sans-serif;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        #question {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        input {
+            font-size: 18px;
+            padding: 5px;
+            width: 80px;
+            text-align: center;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 5px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        #timer,
+        #score {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="Planet Bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="box">
+        <h1>SDG 5 Math Challenge!</h1>
+        <div id="timer">Time: 120s</div>
+        <div id="score">Score: 0</div>
+        <div id="question"></div>
+        <input type="number" id="answer" placeholder="Your answer">
+        <button onclick="submitAnswer()">Submit</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "5 + 7 =", a: 12 },
+            { q: "9 – 4 =", a: 5 },
+            { q: "3 × 6 =", a: 18 },
+            { q: "16 ÷ 4 =", a: 4 },
+            { q: "12 + 15 – 7 =", a: 20 },
+            { q: "8 × 5 ÷ 2 =", a: 20 },
+            { q: "What is half of 36?", a: 18 },
+            { q: "If 7 + x = 15, what is x?", a: 8 },
+            { q: "The sum of 8, 5, and 12 =", a: 25 },
+            { q: "A store sells 3 pencils for $2 each. How much for 7 pencils?", a: 14 }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let timeLeft = 120;
+        const startTime = Date.now();
+
+        const questionDiv = document.getElementById('question');
+        const timerDiv = document.getElementById('timer');
+        const scoreDiv = document.getElementById('score');
+        const answerInput = document.getElementById('answer');
+        const resultDiv = document.getElementById('result');
+
+        function showQuestion() {
+            if (currentQ < questions.length) {
+                questionDiv.textContent = questions[currentQ].q;
+                answerInput.value = '';
+                answerInput.focus();
+            } else {
+                endGame();
+            }
+        }
+
+        function submitAnswer() {
+            const userAnswer = Number(answerInput.value);
+            if (userAnswer === questions[currentQ].a) score++;
+            scoreDiv.textContent = `Score: ${score}`;
+            currentQ++;
+            showQuestion();
+        }
+
+        function getPercentile(timeTaken) {
+            if (timeTaken <= 40) return 95;   // Top 5%
+            if (timeTaken <= 60) return 80;   // Top 20%
+            if (timeTaken <= 90) return 50;   // Top 50%
+            if (timeTaken < 120) return 30;   // Top 70%
+            return 0; // Didn’t finish in time
+        }
+
+        function endGame() {
+            clearInterval(countdown);
+            const endTime = Date.now();
+            const timeTaken = Math.floor((endTime - startTime) / 1000);
+            const percentile = getPercentile(timeTaken);
+
+            questionDiv.textContent = `Game Over!`;
+            answerInput.style.display = 'none';
+            document.querySelector('button').style.display = 'none';
+            timerDiv.textContent = '';
+            scoreDiv.textContent = '';
+
+            resultDiv.innerHTML = `
+                ✅ Your score: <b>${score}/${questions.length}</b><br>
+                ⏱ Time completed: <b>${timeTaken} seconds</b><br>
+                📊 You finished faster than <b>${percentile}%</b> of players!<br><br>
+                🌍 <i>So…did you play the game wondering if a boy or girl is allowed to play?</i>
+            `;
+        }
+
+        // Timer countdown
+        const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                endGame();
+            } else {
+                timerDiv.textContent = `Time: ${timeLeft}s`;
+                timeLeft--;
+            }
+        }, 1000);
+
+        showQuestion();
+    </script>
+</body>
+</html>

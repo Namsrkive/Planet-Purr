@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Nunito", sans-serif;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .box {
+            padding: 1.5rem;
+            margin: 5vh auto;
+            height: 55vh;
+            width: 40vw;
+            background: rgba(23, 23, 23, 0.1);
+            border: 10px solid rgba(237, 237, 237, 0.3);
+            backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 5px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .Two {
+            margin-top: 1px;
+        }
+
+        .start {
+            color: #464646;
+            background-color: #dddddd;
+            width: 8vw;
+            height: 7vh;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin-top: 19px;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="Planet Bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="box">
+        <h1>Test your Mathematical Agility!</h1>
+        <h3 class="One">There's 10 question from increasing diffiulty. <br>
+
+        </h3>
+        <h3 class="Two">
+            Try to solve all 10 within 2 minutes!
+        </h3>
+
+        <a href="Game.html">
+            <button class="start">Start</button>
+        </a>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+alert("WARNING: You're about to embark on a crazy journey ⚔️🐉🛡️ ")
