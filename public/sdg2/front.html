@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Region</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Cherry+Bomb+One&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Love Ya Like A Sister', cursive;
+      font-size: clamp(1rem, 2vw, 2rem);
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+
+    .Heading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      height: 100vh;
+      justify-content: center;
+      padding: 0 1rem;
+      /* side padding for small screens */
+    }
+
+    .GameHeading,
+    .GameHeading2,
+    .GameHeading3 {
+      margin: 0;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .GameHeading {
+      font-size: clamp(1.5rem, 6vw, 3rem);
+    }
+
+    .GameHeading2 {
+      font-size: clamp(1.5rem, 6vw, 3rem);
+    }
+
+    .GameHeading3 {
+      font-size: clamp(1.2rem, 5vw, 2.5rem);
+      font-style: oblique;
+    }
+
+
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 5px rgba(255, 192, 203, 0.7);
+        transform: scale(1);
+      }
+
+      50% {
+        box-shadow: 0 0 20px rgba(255, 192, 203, 1);
+        transform: scale(1.1);
+      }
+    }
+
+    .start {
+      background-image: url('Start cover.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border: none;
+      background-color: transparent;
+      width: clamp(80px, 15vw, 150px);
+      height: clamp(80px, 15vw, 150px);
+      cursor: pointer;
+      animation: pulseGlow 2s ease-in-out infinite;
+      margin-top: 2rem;
+    }
+
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      .Heading {
+        padding-top: 2rem;
+        gap: 0.5rem;
+      }
+
+      .start {
+        margin-top: 1.5rem;
+
+      }
+    }
+
+    .start-button {
+      width: 150px;
+      height: auto;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .start-button:hover {
+      box-shadow: 0 0 20px 5px rgba(255, 255, 100, 0.8);
+      transform: scale(1.05);
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Video background -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Screen bg.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Quiz title and button -->
+  <div class="Heading">
+    <h1 class="GameHeading">What Food Matches</h1>
+    <h1 class="GameHeading2">Your</h1>
+    <h1 class="GameHeading3">Personality?</h1>
+    <a href="Qn1/Qn1.Html">
+      <img src="Let’s start!.jpg"  class="start-button">
+    </a>
+
+
+  </div>
+
+
+</body>
+</html>

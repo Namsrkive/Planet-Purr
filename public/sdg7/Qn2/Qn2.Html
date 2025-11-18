@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qn2</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Love Ya Like A Sister', cursive;
+      overflow-x: hidden;
+    }
+
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Layout Containers */
+    .Parent1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .Parent {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.1rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Box Style - Styling the anchor tag for clickability */
+    .box-link {
+      height: 30vh;
+      width: 20vw;
+      min-width: 200px;
+      /* Ensure file path matches case and spacing: Wood Cover.png */
+      background-image: url('Wood Cover.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      border-radius: 30px;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer;
+      animation: pulseGlow 2s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      overflow: hidden;
+      text-decoration: none; /* Remove underline */
+      color: inherit; /* Inherit text color */
+    }
+
+    .box-link:link,
+    .box-link:visited {
+      color: white; /* Ensure link color is white */
+    }
+
+    /* Glowing Shadow Layer */
+    .box-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: drop-shadow(2px 4px 3px rgba(217, 122, 13, 0.8));
+      z-index: -1;
+      border-radius: 30px;
+    }
+
+    .box-link:hover {
+      transform: translateY(-10px) scale(1.08);
+      animation: brightnessGlow 1.2s ease-in-out infinite;
+
+    }
+
+    .box-link:active {
+      transform: translateY(-10px) scale(1.08);
+      filter: brightness(1.4);
+    }
+
+
+    @keyframes brightnessGlow {
+      0% {
+        filter: brightness(1);
+      }
+
+      50% {
+        filter: brightness(1.4);
+      }
+
+      100% {
+        filter: brightness(1);
+      }
+    }
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 5px rgba(255, 192, 203, 0.7));
+        transform: scale(1);
+      }
+
+      50% {
+        filter: drop-shadow(0 0 20px rgba(255, 192, 203, 1));
+        transform: scale(1.05);
+      }
+    }
+
+    .Qn1 {
+      color: white;
+      font-size: clamp(1rem, 10vw, 2rem);
+      text-align: center;
+      font-weight: 900;
+      text-shadow: 4px 8px 5px rgba(0, 0, 0, 1);
+      margin: 2rem 1rem 1rem;
+    }
+
+
+    .Intro1 {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: white;
+      transition: all 0.3s ease-in-out;
+      z-index: 10;
+    }
+
+    .Intro1:hover {
+      color: white;
+      font-size: clamp(1.1rem, 5vw, 2rem);
+    }
+
+
+    @media (max-width: 768px) {
+      .Parent1 {
+        padding: 0.5rem;
+      }
+
+      .Parent {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+      }
+
+      .box-link {
+        width: 94vw;
+        height: auto;
+        aspect-ratio: 3 / 2;
+        margin-bottom: 0.3rem;
+        background-size: cover;
+        padding: 0.2rem;
+      }
+
+      .Intro1 {
+        font-size: clamp(1rem, 6vw, 5rem);
+        position: relative;
+        left: -7%;
+        padding: 0.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Qn1Bg.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <h4 class="Qn1">
+    To reach the Dark Mountains, you must choose a perilous path 🗺️☠️
+  </h4>
+
+  <div class="Parent1">
+    <div class="Parent" id="parent-boxes">
+      </div>
+  </div>
+
+  <script>
+    // 1. GET PREVIOUS ANSWER (ans1)
+    const urlParams = new URLSearchParams(window.location.search);
+    const ans1 = urlParams.get('choice') || 'none'; // Assuming Qn1 passes 'choice'
+
+    // 2. DEFINE Qn2 OPTIONS
+    const options = [
+      { text: "🌋 <br> Across lava fields", value: "lava" },
+      { text: "₊🌨️₊ <br> Through icy <br> snowstorm", value: "snowstorm" },
+      { text: "🕳️🌌 <br> Into a tunnel of <br> total darkness", value: "darkness" }
+    ];
+
+    const container = document.getElementById('parent-boxes');
+
+    // 3. CREATE BOXES DYNAMICALLY WITH LINK
+    options.forEach((opt, index) => {
+      const a = document.createElement('a');
+      
+      // Path: Go up one level (from Qn2) to the sdg7 folder, then into Qn3
+      a.href = `../Qn3/Qn3.Html?ans1=${encodeURIComponent(ans1)}&ans2=${encodeURIComponent(opt.value)}`;
+      
+      a.className = 'box-link';
+      a.innerHTML = `<p class="Intro1">${opt.text}</p>`;
+      
+      // Optional: Add touch listener for active state (copied from Qn1.html)
+      a.addEventListener('touchstart', () => {
+          a.classList.add('active'); 
+          setTimeout(() => {
+              a.classList.remove('active');
+          }, 800); 
+      });
+
+      container.appendChild(a);
+    });
+  </script>
+
+</body>
+
+</html>

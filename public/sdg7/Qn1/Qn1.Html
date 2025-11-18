@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDG 7 Quiz </title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Love Ya Like A Sister', cursive;
+      overflow-x: hidden;
+    }
+
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Layout Containers */
+    .Parent1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .Parent {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.1rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Box Style - Targeting the <a> tag */
+    .box-link {
+      height: 30vh;
+      width: 20vw;
+      min-width: 200px;
+      /* Ensure file path matches case and spacing: Wood Cover.png */
+      background-image: url('Wood Cover.png'); 
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      border-radius: 30px;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer;
+      animation: pulseGlow 2s ease-in-out infinite;
+      display: flex;
+      flex-direction: column; /* Allows content alignment */
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      overflow: hidden;
+      text-decoration: none; /* Remove underline */
+    }
+    
+    /* Applying styles to the link itself */
+    .box-link:link,
+    .box-link:visited {
+      color: inherit; /* Ensure link color is white/inherited */
+    }
+
+    /* Glowing Shadow Layer */
+    .box-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: drop-shadow(2px 4px 3px rgba(217, 122, 13, 0.8));
+      z-index: -1;
+      border-radius: 30px;
+    }
+
+    .box-link:hover {
+      transform: translateY(-10px) scale(1.08);
+      animation: brightnessGlow 1.2s ease-in-out infinite;
+
+    }
+
+    .box-link:active {
+      transform: translateY(-10px) scale(1.08);
+      filter: brightness(1.4);
+    }
+
+
+    @keyframes brightnessGlow {
+      0% {
+        filter: brightness(1);
+      }
+
+      50% {
+        filter: brightness(1.4);
+      }
+
+      100% {
+        filter: brightness(1);
+      }
+    }
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 5px rgba(255, 192, 203, 0.7));
+        transform: scale(1);
+      }
+
+      50% {
+        filter: drop-shadow(0 0 20px rgba(255, 192, 203, 1));
+        transform: scale(1.05);
+      }
+    }
+
+    .Qn1 {
+      color: white;
+      font-size: clamp(1rem, 10vw, 2rem);
+      text-align: center;
+      font-weight: 900;
+      text-shadow: 4px 8px 5px rgba(0, 0, 0, 1);
+      margin: 2rem 1rem 1rem;
+    }
+
+
+    .Intro1 {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: white;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .Intro1:hover {
+      color: white;
+      font-size: clamp(1.1rem, 5vw, 2rem);
+      /* Removed duplicate animations here, relying on .box-link:hover */
+    }
+
+
+    @media (max-width: 768px) {
+      .Parent1 {
+        padding: 0.5rem;
+      }
+
+      .Parent {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+      }
+
+      .box-link { /* Targeting the link instead of the old div classes */
+        width: 94vw;
+        height: auto;
+        aspect-ratio: 3 / 2;
+        margin-bottom: 0.3rem;
+        background-size: cover;
+        padding: 0.2rem;
+      }
+
+      .Intro1 {
+        font-size: clamp(1rem, 6vw, 5rem);
+        position: relative;
+        left: -7%;
+        padding: 0.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Qn1Bg.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <h4 class="Qn1">
+    You have been <br> assigned by <br>
+    the council to save Princess Aura... <br>What do you take with you?
+  </h4>
+
+  <div class="Parent1">
+    <div class="Parent">
+      
+      <a href="../Qn2/Qn2.Html?choice=blade" class="box-link">
+        <p class="Intro1">🗡️ <br> Your blade, kissed by<br>  fire and vengeance </p>
+      </a>
+      
+      <a href="../Qn2/Qn2.Html?choice=compass" class="box-link">
+        <p class="Intro1">📖 <br>A map of the stars <br> and a solar compass</p>
+      </a>
+      
+      <a href="../Qn2/Qn2.Html?choice=cloak" class="box-link">
+        <p class="Intro1">🧙🏽<br>  Your cloak <br> spun from wind <br> and silence</p>
+      </a>
+      
+    </div>
+  </div>
+
+  <script>
+    // CLEANED UP: The Qn1.JS logic (touch events) is no longer necessary 
+    // because the navigation and basic hover/active effects are handled by the <a> tag and CSS.
+    // If you need specific touch classes, you can re-implement the touch event listener here.
+
+    // If you need the touch effect from Qn1.JS, place this here:
+    document.querySelectorAll('.box-link').forEach(box => {
+        box.addEventListener('touchstart', () => {
+            box.classList.add('active'); // Use 'active' class for touch
+            setTimeout(() => {
+                box.classList.remove('active');
+            }, 800); 
+        });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food region - Qn3</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shizuru&display=swap" rel="stylesheet">
+
+  <style>
+    /* RESET & BASE */
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* VIDEO BACKGROUND */
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* CONTAINER */
+    .box {
+      padding: 1.5rem;
+      margin: 5vh auto;
+      width: 90%;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 10px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* HEADER TEXT */
+    .Qn1 {
+      color: white;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      text-align: center;
+      font-family: 'Love Ya Like A Sister';
+      font-weight: 900;
+      text-shadow: 1px 1px 5px rgba(0.7, 1, 1, 0.8);
+      margin: 10px 0;
+    }
+
+    /* IMAGE */
+    .Cover {
+      width: clamp(200px, 80%, 500px);
+      height: auto;
+      margin: 0 auto 20px;
+    }
+
+    /* BUTTON CONTAINER */
+    .buttonqn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+    }
+
+    @media (min-width: 600px) {
+      .buttonqn {
+        gap: 0.8rem;
+        overflow: visible;
+      }
+    }
+
+    /* BUTTON STYLES */
+    .button,
+    .button1,
+    .button2,
+    .button3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: #104d00;
+      background-color: #b3f3a6;
+      width: 230px;
+      height: 50px;
+      border-radius: 20px;
+      border: 3px solid #027145;
+      font-family: "Cherry Bomb One", system-ui;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .button:hover,
+    .button1:hover,
+    .button2:hover,
+    .button3:hover {
+      background-color: white;
+      color: rgb(255, 18, 168);
+      border: 4px solid rgb(233, 28, 161);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- KEEP VIDEO BACKGROUND -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Bg video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="box">
+    <h4 class="Qn1">What's your <br> weekend plan?</h4>
+    <img class="Cover" src="Cover.png" alt="">
+
+    <!-- BUTTONS -->
+    <div class="buttonqn" id="buttons"></div>
+  </div>
+
+  <script>
+    // Get previous answer from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const ans1 = urlParams.get('ans1') || 'none';
+
+    // Define Qn3 options
+    const options = [
+      { text: "Party duh *extroverted*", value: "duh" },
+      { text: "Solo *finally* 𖦹 ´ ᯅ ` 𖦹", value: "Solo" },
+      { text: "Yap with whoever!", value: "Yap" },
+      { text: "Plan for next week", value: "Plan" }
+    ];
+
+    const container = document.getElementById('buttons');
+
+    // Create <button> elements dynamically
+    options.forEach((opt, index) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt.text;
+      btn.className = 'button' + (index === 0 ? '' : index); // button, button1, ...
+      btn.addEventListener('click', () => {
+        // Navigate to Qn4 with ans1 and ans2
+        window.location.href = `../Qn4/Qn4.html?ans1=${encodeURIComponent(ans1)}&ans2=${encodeURIComponent(opt.value)}`;
+      });
+      container.appendChild(btn);
+    });
+  </script>
+</body>
+
+</html>

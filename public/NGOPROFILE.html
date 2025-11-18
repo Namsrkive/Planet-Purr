@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>NGO Profiles</title>
+
+  <!-- Jua Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- MAIN PAGE STYLES --- */
+    body {
+      font-family: "Jua", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      background: linear-gradient(120deg, #e6dafc 0%, #f3f2fa 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .fancy-heading {
+      text-align: center;
+      margin: 2.2rem 0 1.5rem 0;
+      color: #876dc4;
+      font-size: 2.5em;
+      letter-spacing: 2.5px;
+      font-weight: bold;
+      text-shadow: 0 4px 18px #bdaee98c;
+    }
+
+    .card-list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 52px;
+      margin-top: 38px;
+      flex-wrap: wrap;
+    }
+
+    .ngo-card {
+      width: 315px;
+      min-height: 372px;
+      background: linear-gradient(120deg, #f6ebff 80%, #e0f0fa 100%);
+      border-radius: 30px;
+      box-shadow: 0 6px 28px #b0a2da46;
+      overflow: hidden;
+      border: 4px solid #c6b4ea;
+      position: relative;
+      transition: transform 0.22s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ngo-card:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 14px 40px #bba6f599;
+    }
+
+    .card-header {
+      background-color: #f6e8ff;
+      color: #8367d8;
+      font-weight: 700;
+      font-size: 1.3rem;
+      padding: 21px 20px 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .card-logo-box {
+      background: #ffeca6;
+      border-radius: 999px;
+      padding: 7px 32px;
+      border: 2.5px solid #efa15a;
+      font-size: 1.15em;
+      font-weight: bold;
+      box-shadow: 0 3px 9px #efe2c0cc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-logo-box img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .card-title {
+      color: #4e35a6;
+      font-size: 1.27rem;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      margin: 0 0 7px 0;
+    }
+
+    .profile-label {
+      color: #a687e6;
+      font-weight: bold;
+      font-size: 1.08em;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .card-body {
+      padding: 18px 18px 5px 18px;
+      color: #7e5bb6;
+      flex: 1 1 auto;
+    }
+
+    .about {
+      min-height: 80px;
+      font-size: 1em;
+      margin-bottom: 17px;
+    }
+
+    .card-illustration {
+      width: 48px;
+      margin: 7px auto 0 auto;
+      display: block;
+      filter: drop-shadow(0 0 6px #d1c1ee43);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 14px;
+      margin: 16px 0 11px 0;
+      justify-content: center;
+    }
+
+    .btn-fancy {
+      padding: 8px 24px;
+      font-weight: 600;
+      font-size: 1.04em;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      color: white;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+      background: linear-gradient(90deg, #a389ec 30%, #f472b2 100%);
+      box-shadow: 0 2px 12px #dfc8f7a2;
+      transition: filter 0.13s;
+    }
+
+    .btn-fancy.details {
+      background: linear-gradient(90deg, #f472b2 60%, #a389ec 100%);
+    }
+
+    .btn-fancy.contact {
+      background: linear-gradient(90deg, #a389ec 40%, #6d4faf 100%);
+    }
+
+    .btn-fancy:hover {
+      filter: brightness(0.9);
+    }
+
+    /* --- MODAL --- */
+    .modal {
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(180, 150, 210, 0.42);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border-radius: 22px;
+      padding: 38px 42px;
+      min-width: 350px;
+      max-width: 90vw;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 25px rgba(155, 120, 200, 0.3);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .close-btn {
+      margin: 18px auto 0 auto;
+      display: block;
+      padding: 6px 21px;
+      background: #d195e6;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.1em;
+      border-radius: 15px;
+      border: none;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 6px #b98ed555;
+    }
+
+    /* --- EMBEDDED RANGICHANGI & JUNKIRI STYLE --- */
+    .Parent2,
+    .Parent1,
+    .Parent {
+      all: unset;
+      display: block;
+    }
+
+    .rangichangi-container,
+    .divarent2 {
+      font-family: "Jua", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #94007e;
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(14px) brightness(1.1);
+      -webkit-backdrop-filter: blur(14px) brightness(1.1);
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 25px rgba(140, 90, 200, 0.25);
+    }
+
+    .Parent2 {
+      width: 80vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      margin-top: 1rem;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 18px;
+      padding: 10px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 4px 16px rgba(160, 110, 200, 0.25);
+    }
+
+    .leftsideofParent2 {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .RangichangiPic,
+    .junkiri,
+    .RANGICHANGI {
+      height: 90px;
+      width: 110px;
+      object-fit: contain;
+    }
+
+    .Heading {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #b41165;
+    }
+
+    .rightsideofParent2 {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .subheading1 a {
+      text-decoration: none;
+      color: #b41165;
+      font-size: 1.2rem;
+    }
+
+    .subheading1 a:hover {
+      text-decoration: underline;
+    }
+
+    .Parent1 {
+      width: 80vw;
+      display: flex;
+      justify-content: center;
+    }
+
+    .Parent {
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      border-radius: 30px;
+      width: 100%;
+      height: 70vh;
+    }
+
+    .box {
+      height: 270px;
+      width: 250px;
+      border-radius: 30px;
+      text-align: center;
+      transition: ease-in 0.3s;
+      background-color: rgb(255, 237, 247);
+      padding: 1rem;
+    }
+
+    .box:hover {
+      box-shadow: 1px -0.5px 20px rgba(255, 66, 198, 0.799);
+      transform: translateY(-17px);
+    }
+
+    .box img {
+      height: 110px;
+      margin-top: 20px;
+    }
+
+    .Intro1 {
+      margin-top: 1rem;
+      font-weight: 600;
+      color: #b41165;
+    }
+
+    .Intro2 {
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.5rem;
+    }
+
+    /* 🌟 Falling Stars Animation 🌟 */
+    .falling-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .falling {
+      position: absolute;
+      top: -100px;
+      width: 40px;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 3;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.1;
+      }
+    }
+
+    /* 🌟 Falling Stars Animation 🌟 */
+    .falling-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .falling {
+      position: absolute;
+      top: -100px;
+      width: 40px;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 3;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.1;
+      }
+    }
+
+    /* Random positions, speeds, and delays for 20 stars */
+    .star1 {
+      left: 5%;
+      animation-duration: 8s;
+      animation-delay: 0s;
+    }
+
+    .star2 {
+      left: 10%;
+      animation-duration: 11s;
+      animation-delay: 2s;
+    }
+
+    .star3 {
+      left: 15%;
+      animation-duration: 9s;
+      animation-delay: 1s;
+    }
+
+    .star4 {
+      left: 20%;
+      animation-duration: 10s;
+      animation-delay: 4s;
+    }
+
+    .star5 {
+      left: 25%;
+      animation-duration: 12s;
+      animation-delay: 3s;
+    }
+
+    .star6 {
+      left: 30%;
+      animation-duration: 9s;
+      animation-delay: 5s;
+    }
+
+    .star7 {
+      left: 35%;
+      animation-duration: 13s;
+      animation-delay: 1s;
+    }
+
+    .star8 {
+      left: 40%;
+      animation-duration: 8s;
+      animation-delay: 6s;
+    }
+
+    .star9 {
+      left: 45%;
+      animation-duration: 11s;
+      animation-delay: 2s;
+    }
+
+    .star10 {
+      left: 50%;
+      animation-duration: 10s;
+      animation-delay: 7s;
+    }
+
+    .star11 {
+      left: 55%;
+      animation-duration: 9s;
+      animation-delay: 4s;
+    }
+
+    .star12 {
+      left: 60%;
+      animation-duration: 12s;
+      animation-delay: 3s;
+    }
+
+    .star13 {
+      left: 65%;
+      animation-duration: 8s;
+      animation-delay: 5s;
+    }
+
+    .star14 {
+      left: 70%;
+      animation-duration: 10s;
+      animation-delay: 1s;
+    }
+
+    .star15 {
+      left: 75%;
+      animation-duration: 13s;
+      animation-delay: 6s;
+    }
+
+    .star16 {
+      left: 80%;
+      animation-duration: 9s;
+      animation-delay: 2s;
+    }
+
+    .star17 {
+      left: 85%;
+      animation-duration: 12s;
+      animation-delay: 5s;
+    }
+
+    .star18 {
+      left: 90%;
+      animation-duration: 11s;
+      animation-delay: 3s;
+    }
+
+    .star19 {
+      left: 95%;
+      animation-duration: 10s;
+      animation-delay: 1s;
+    }
+
+    .star20 {
+      left: 50%;
+      animation-duration: 14s;
+      animation-delay: 8s;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 🌟 Custom Falling Stars Background 🌟 -->
+  <div class="falling-bg">
+    <img src="star.png" alt="sparkle" class="falling star1">
+    <img src="star.png" alt="sparkle" class="falling star2">
+    <img src="star.png" alt="sparkle" class="falling star3">
+    <img src="star.png" alt="sparkle" class="falling star4">
+    <img src="star.png" alt="sparkle" class="falling star5">
+    <img src="star.png" alt="sparkle" class="falling star6">
+    <img src="star.png" alt="sparkle" class="falling star7">
+    <img src="star.png" alt="sparkle" class="falling star8">
+    <img src="star.png" alt="sparkle" class="falling star9">
+    <img src="star.png" alt="sparkle" class="falling star10">
+    <img src="star.png" alt="sparkle" class="falling star11">
+    <img src="star.png" alt="sparkle" class="falling star12">
+    <img src="star.png" alt="sparkle" class="falling star13">
+    <img src="star.png" alt="sparkle" class="falling star14">
+    <img src="star.png" alt="sparkle" class="falling star15">
+    <img src="star.png" alt="sparkle" class="falling star16">
+    <img src="star.png" alt="sparkle" class="falling star17">
+    <img src="star.png" alt="sparkle" class="falling star18">
+    <img src="star.png" alt="sparkle" class="falling star19">
+    <img src="star.png" alt="sparkle" class="falling star20">
+  </div>
+
+  <h1 class="fancy-heading">✨ NGO PROFILES ✨</h1>
+  <div id="card-list" class="card-list"></div>
+
+  <div id="profile-modal" class="modal hidden">
+    <div class="modal-content" id="profile-content"></div>
+    <button id="close-modal" class="close-btn">Close</button>
+  </div>
+
+  <script>
+    const ngos = [
+      {
+        id: 1,
+        name: "JUNKIRI EDUCARES",
+        about: `Junkiri EduCares is a youth-led initiative supporting underserved children, especially from working-class families and single mothers. We provide scholarships, school supplies, food, clothing, and essentials like water bottles and umbrellas. Beyond academics, we create a nurturing space where kids celebrate birthdays, festivals, and cultural events together.`,
+        contact: "junkirieducares@gmail.com",
+        details: `
+    <div class="divarent2">
+      <div class="Parent2">
+        <div class="leftsideofParent2">
+          <img class="junkiri" src="JunKiri/JunKiriEducares Logo.jpg" alt="Junkiri EduCares Logo" />
+          <h3 class="Heading">JUNKIRI EDUCARES</h3>
+        </div>
+        <div class="rightsideofParent2">
+          <h5 class="subheading1"><a href="https://junkirieducares.com.np" target="_blank">Website</a></h5>
+          <h5 class="subheading1"><a href="mailto:junkirieducares@gmail.com">junkirieducares@gmail.com</a></h5>
+          <h5 class="subheading1"><a href="https://www.instagram.com/junkiri_educares/" target="_blank">Social Media</a></h5>
+        </div>
+      </div>
+      <div class="Parent1">
+        <div class="Parent">
+          <div class="box">
+            <img src="JunKiri/Infrastructure&Support.jpg" alt="Infrastructure & Support" />
+            <h3 class="Intro1">Infrastructure & Support</h3>
+            <p class="Intro2">Distributed necessities</p>
+            <p class="Intro2">Built homes</p>
+            <p class="Intro2">Provided school admission</p>
+          </div>
+          <div class="box">
+            <img src="JunKiri/Community.jpg" alt="Community & School Partnerships" />
+            <h3 class="Intro1">Community & School Partnerships</h3>
+            <p class="Intro2">Built networks with private and government schools</p>
+          </div>
+          <div class="box">
+            <img src="JunKiri/Volunteers.jpg" alt="Join Us" />
+            <h3 class="Intro1">Join Us</h3>
+            <p class="Intro2">20+ youth volunteers contributing to teaching, events, and awareness campaigns</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+        logo: '<img src="JunKiri/JunKiriEducares Logo.jpg" alt="Junkiri Logo">'
+      },
+      {
+        id: 2,
+        name: "PROJECT RANGICHANGI",
+        about: `Transforming dark classrooms in Nepal's public schools into bright, colorful spaces with murals.
+<BR>
+We are a youth-led initiative transforming old, dark classrooms in Nepal’s public schools into bright, colorful spaces adorned with thoughtful murals. Join us in reaching more schools and bringing joy, inspiration, and creativity into children’s lives!`,
+        contact: '<a href="mailto:projectrangichangi@gmail.com">projectrangichangi@gmail.com</a>',
+        details: `
+        <div class="rangichangi-container">
+          <div class="Parent2">
+            <div class="leftsideofParent2">
+              <img class="RANGICHANGI" src="RANGICHANGI/ProjectRangiChangilogo.jpg" alt="Rangichangi Logo" />
+              <h3 class="Heading">PROJECT RANGICHANGI</h3>
+            </div>
+            <div class="rightsideofParent2">
+              <h5 class="subheading1"><a href="https://www.instagram.com/project_rangichangi/" target="_blank">Social Media</a></h5>
+              <h5 class="subheading1"><a href="mailto:projectrangichangi@gmail.com">projectrangichangi@gmail.com</a></h5>
+              <h5 class="subheading1"><a href="https://www.gofundme.com/f/project-rangichangi" target="_blank">Donate</a></h5>
+            </div>
+          </div>
+          <div class="Parent1">
+            <div class="Parent">
+              <div class="box">
+                <img src="RANGICHANGI/Impact.jpg" alt="Impact Report" />
+                <a href="https://www.canva.com/design/DAGaCObBqnU/LKV4Y3kFFatzYbkWxL1bAw/edit" target="_blank">
+                  <h3 class="Intro1">IMPACT REPORT</h3>
+                </a>
+                <p class="Intro2">Find out how we use our <br> funds to improve lives</p>
+              </div>
+              <div class="box">
+                <img src="RANGICHANGI/mission.jpg" alt="Our Mission" />
+                <a href="https://www.canva.com/design/DAGWi97pt4E/u24ZyUpySdD-otrxrT0Ynw/view" target="_blank">
+                  <h3 class="Intro1">Our Mission</h3>
+                </a>
+                <p class="Intro2">Unite the youth in bringing positive change to Nepal's public schools through art, murals, and child-friendly resources</p>
+              </div>
+              <div class="box">
+                <img src="RANGICHANGI/volunteers.jpg" alt="Call for Help" />
+                <a href="https://docs.google.com/document/d/1CilWKVVt0PFCM_PHwosUNfOuSoP50bexsSuh5wKSyvE/edit" target="_blank">
+                  <h3 class="Intro1">Join Us</h3>
+                </a>
+                <p class="Intro2">Volunteers, teachers and Artists are encouraged!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+        logo: '<img src="RANGICHANGI/ProjectRangiChangilogo.jpg" alt="Rangichangi Logo">'
+      }
+    ];
+
+    // RENDER CARDS
+    document.getElementById('card-list').innerHTML = ngos.map(ngo => `
+    <div class="ngo-card" data-id="${ngo.id}">
+      <div class="card-header">
+        <span class="card-logo-box">${ngo.logo}</span>
+        <div class="card-title">${ngo.name}</div>
+      </div>
+      <div class="card-body">
+        <span class="profile-label">ABOUT</span>
+        <div class="about">${ngo.about}</div>
+        <div class="card-actions">
+          <button class="btn-fancy details" data-id="${ngo.id}">View</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+    // MODAL FUNCTIONALITY
+    const modal = document.getElementById('profile-modal');
+    const content = document.getElementById('profile-content');
+    const closeBtn = document.getElementById('close-modal');
+
+    document.querySelectorAll('.ngo-card').forEach(card => {
+      card.addEventListener('click', e => {
+        const id = Number(card.dataset.id);
+        const ngo = ngos.find(n => n.id === id);
+        content.innerHTML = ngo.details;
+        modal.classList.remove('hidden');
+      });
+    });
+
+    closeBtn.onclick = () => modal.classList.add('hidden');
+    modal.onclick = e => {
+      if (e.target === modal) modal.classList.add('hidden');
+    };
+  </script>
+</body>
+
+</html>

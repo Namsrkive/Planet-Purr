@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Food region - Qn5</title>
+
+  <!-- Fonts (kept) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shizuru&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+    html,body { margin:0; padding:0; font-family:'Inter',sans-serif; }
+
+    /* VIDEO BACKGROUND */
+    .bg-video { position: fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
+
+    /* CONTAINER */
+    .box {
+      padding:1.5rem;
+      margin:5vh auto;
+      width:90%;
+      max-width:500px;
+      background:rgba(255,255,255,0.1);
+      border:10px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius:20px;
+      color:white;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .Qn1 {
+      color:white;
+      font-size:clamp(1.8rem,5vw,2.5rem);
+      text-align:center;
+      font-family:'Love Ya Like A Sister';
+      font-weight:900;
+      text-shadow:1px 1px 5px rgba(0.7,1,1,0.8);
+      margin:10px 0;
+    }
+
+    .Cover { width:clamp(200px,80%,500px); height:auto; margin:0 auto 20px; }
+
+    .buttonqn { display:flex; flex-direction:column; align-items:center; gap:14px; width:100%; }
+    @media (min-width:600px) { .buttonqn { gap:0.8rem; } }
+
+    .button, .button1, .button2, .button3 {
+      display:flex; justify-content:center; align-items:center; text-decoration:none;
+      color:#104d00; background-color:#b3f3a6; width:200px; height:50px;
+      border-radius:20px; border:3px solid #027145;
+      font-family:"Cherry Bomb One", system-ui; font-size:1.1rem; cursor:pointer;
+      transition: all 0.3s ease-in-out;
+    }
+    .button:hover, .button1:hover, .button2:hover, .button3:hover {
+      background-color:white; color:rgb(255,18,168); border:4px solid rgb(233,28,161);
+    }
+
+  </style>
+</head>
+<body>
+  <!-- BACKGROUND VIDEO (kept) -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Bg video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="box">
+    <h4 class="Qn1">You’re told your favorite food has a huge environmental footprint. You...</h4>
+    <img class="Cover" src="Cover.png" alt="cover">
+
+    <div class="buttonqn" id="buttons"></div>
+  </div>
+
+  <script>
+    // ---------- helper: normalize text for robust matching ----------
+    function normalize(s) {
+      if (!s) return '';
+      // URLSearchParams already decodes percent-encoding; ensure string, lowercase, remove punctuation and emoji
+      return String(s)
+        .toLowerCase()
+        .replace(/[\u{1F300}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{2600}-\u{26FF}]/gu, '') // remove many emoji ranges
+        .replace(/[^a-z0-9\s]/g, '') // remove punctuation
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    // ---------- read previous answers (they may be raw texts or short tokens) ----------
+    const params = new URLSearchParams(window.location.search);
+    const ans1raw = params.get('ans1') || '';
+    const ans2raw = params.get('ans2') || '';
+    const ans3raw = params.get('ans3') || '';
+    const ans4raw = params.get('ans4') || '';
+
+    const a1 = normalize(ans1raw);
+    const a2 = normalize(ans2raw);
+    const a3 = normalize(ans3raw);
+    const a4 = normalize(ans4raw);
+
+    // ---------- q5 options (text shown on buttons, value also passed) ----------
+    const options = [
+      { text: "Cry.. OK NEXT", value: "Cry.. OK NEXT" },
+      { text: "Try alternatives", value: "Try alternatives" },
+      { text: "Do research and switch", value: "Do research and switch" },
+      { text: "Go cold turkey", value: "Go cold turkey" }
+    ];
+
+    // ---------- scoring rules: keywords per question for each result ----------
+    // arrays of keywords per question (will match via .includes on normalized strings)
+    const rules = {
+      bread: {
+        q1: ['parsley','clove'],
+        q2: ['stress','crisis','easy'],
+        q3: ['solo','plan'],
+        q4: ['slow','float','eat slowly','eat'],
+        q5: ['alternative','research']
+      },
+      pineapple: {
+        q1: ['paprika','cinnamon'],
+        q2: ['panic','crisis'],
+        q3: ['party','yap','extrovert'],
+        q4: ['panic','dessert','desserts'],
+        q5: ['cry']
+      },
+      espresso: {
+        q1: ['cinnamon'],
+        q2: ['panic'],
+        q3: ['party'],
+        q4: ['dessert','desserts'],
+        q5: ['research','turkey','cold']
+      },
+      rice: {
+        q1: ['parsley'],
+        q2: ['stress'],
+        q3: ['solo'],
+        q4: ['slow'],
+        q5: ['alternative']
+      },
+      honey: {
+        q1: ['clove'],
+        q2: ['crisis','easy'],
+        q3: ['plan'],
+        q4: ['float'],
+        q5: ['turkey','cold']
+      }
+    };
+
+    // weights for q1..q5 (you can tweak)
+    const weights = [1.0, 1.0, 1.0, 1.0, 1.2];
+
+    // result -> folder/file map (adjust these if your Result folder path differs)
+    const resultPathMap = {
+      bread:   "../Result/bread/bread.html",
+      pineapple: "../Result/Pizza/Pizza.html",
+      espresso:  "../Result/Espresso/espresso.html",
+      rice:      "../Result/Rice/Rice.html",
+      honey:     "../Result/Honey/honey.html"
+    };
+
+    // compute score for a given result key
+    function scoreFor(resultKey, q5norm) {
+      let score = 0;
+      const r = rules[resultKey];
+      if (!r) return 0;
+      // q1
+      r.q1.forEach(k => { if (a1.includes(k)) score += weights[0]; });
+      // q2
+      r.q2.forEach(k => { if (a2.includes(k)) score += weights[1]; });
+      // q3
+      r.q3.forEach(k => { if (a3.includes(k)) score += weights[2]; });
+      // q4
+      r.q4.forEach(k => { if (a4.includes(k)) score += weights[3]; });
+      // q5 (current click)
+      r.q5.forEach(k => { if (q5norm.includes(k)) score += weights[4]; });
+      return score;
+    }
+
+    // choose best result by scoring
+    function chooseResult(q5value) {
+      const q5norm = normalize(q5value);
+      const scores = {};
+      for (const key of Object.keys(rules)) {
+        scores[key] = scoreFor(key, q5norm);
+      }
+      // debug: print scores
+      console.log('Normalized answers:', { a1, a2, a3, a4, q5: q5norm });
+      console.log('Scores:', scores);
+
+      // pick highest score
+      let best = null;
+      let bestScore = -1;
+      for (const k of Object.keys(scores)) {
+        if (scores[k] > bestScore) { bestScore = scores[k]; best = k; }
+      }
+
+      // if everything scored 0, fallback to bread
+      if (bestScore <= 0 || !best) best = 'bread';
+      return best;
+    }
+
+    // build the UI and wire navigation
+    const container = document.getElementById('buttons');
+
+    options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt.text;
+      btn.className = 'button' + (i === 0 ? '' : i);
+      btn.addEventListener('click', () => {
+        // choose result key by scoring
+        const chosenKey = chooseResult(opt.value);
+        const resultPath = resultPathMap[chosenKey] || resultPathMap['bread'];
+
+        console.log('Chosen result key:', chosenKey, ' -> ', resultPath);
+
+        // pass full answers to the result page if you want them there
+        const query = `?ans1=${encodeURIComponent(ans1raw)}&ans2=${encodeURIComponent(ans2raw)}&ans3=${encodeURIComponent(ans3raw)}&ans4=${encodeURIComponent(ans4raw)}&ans5=${encodeURIComponent(opt.value)}`;
+
+        // redirect (adjust prefix if Result sits elsewhere)
+        window.location.href = resultPath + query;
+      });
+      container.appendChild(btn);
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDG 5 Math Game</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Shizuru&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .box {
+            padding: 1.5rem;
+            margin: 5vh auto;
+            width: 75%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 10px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body {
+            text-align: center;
+            padding: 50px;
+            background: #f0f8ff;
+            font-family: "Nunito", sans-serif;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        #question {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        input {
+            font-size: 18px;
+            padding: 5px;
+            width: 80px;
+            text-align: center;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 5px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        #timer,
+        #score {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+        }
+
+        .buttonqn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        @media (min-width: 480px) {
+            .buttonqn {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        .button,
+        .button1 {
+            color: #ff12a8;
+            background-color: white;
+            width: 80%;
+            max-width: 250px;
+            height: 50px;
+            border-radius: 20px;
+            border: 3px solid #e91ca1;
+            font-family: "Cherry Bomb One", system-ui;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .button:hover,
+        .button1:hover {
+            background-color: white;
+            color: #2eafff;
+            border: 4px solid #3189e7;
+            margin-top: 4px;
+        }
+
+        .desc {
+            color: white;
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        .desc1 {
+            color: white;
+            text-align: center;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            font-weight: 300;
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="Planet Bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="box">
+        <h1>SDG 5 Math Challenge!</h1>
+        <div id="timer">Time: 120s</div>
+        <div id="score">Score: 0</div>
+        <div id="question"></div>
+        <input type="number" id="answer" placeholder="Your answer">
+        <button onclick="submitAnswer()">Submit</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "5 + 7 =", a: 12 },
+            { q: "9 – 4 =", a: 5 },
+            { q: "3 × 6 =", a: 18 },
+            { q: "16 ÷ 4 =", a: 4 },
+            { q: "12 + 15 – 7 =", a: 20 },
+            { q: "8 × 5 ÷ 2 =", a: 20 },
+            { q: "What is half of 36?", a: 18 },
+            { q: "If 7 + x = 15, what is x?", a: 8 },
+            { q: "The sum of 8, 5, and 12 =", a: 25 },
+            { q: "A store sells 3 pencils for $2 each. How much for 7 pencils?", a: 14 }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let timeLeft = 120;
+        const startTime = Date.now();
+
+        const questionDiv = document.getElementById('question');
+        const timerDiv = document.getElementById('timer');
+        const scoreDiv = document.getElementById('score');
+        const answerInput = document.getElementById('answer');
+        const resultDiv = document.getElementById('result');
+
+        function showQuestion() {
+            if (currentQ < questions.length) {
+                questionDiv.textContent = questions[currentQ].q;
+                answerInput.value = '';
+                answerInput.focus();
+            } else {
+                endGame();
+            }
+        }
+
+        function submitAnswer() {
+            const userAnswer = Number(answerInput.value);
+            if (userAnswer === questions[currentQ].a) score++;
+            scoreDiv.textContent = `Score: ${score}`;
+            currentQ++;
+            showQuestion();
+        }
+        function calculatePerformance(score, timeTaken, totalQuestions) {
+            // Accuracy: 0–100 scale
+            const accuracy = (score / totalQuestions) * 100;
+
+            // Speed: full 100 points if finished in 40s, 0 points if 120s or more
+            const speedScore = Math.max(0, Math.min(100, 100 - ((timeTaken - 40) / 80) * 100));
+
+            // Weighted metric (70% accuracy + 30% speed)
+            let finalMetric = (0.7 * accuracy) + (0.3 * speedScore);
+
+            // Clamp to range 0–100
+            finalMetric = Math.min(100, Math.max(0, finalMetric));
+
+            return finalMetric;
+        }
+        function getPercentile(timeTaken) {
+            if (timeTaken <= 40) return 95;   // Top 5%
+            if (timeTaken <= 60) return 80;   // Top 20%
+            if (timeTaken <= 90) return 50;   // Top 50%
+            if (timeTaken < 120) return 30;   // Top 70%
+            return 0; // Didn’t finish in time
+        }
+
+        function getRanking(metric) {
+            if (metric >= 90) return 95; // Top 5%
+            if (metric >= 75) return 80; // Top 20%
+            if (metric >= 60) return 60; // Top 40%
+            if (metric >= 40) return 40; // Top 60%
+            if (metric >= 20) return 25; // Top 75%
+            return 10; // Below average
+        }
+
+        function endGame() {
+            clearInterval(countdown);
+            const endTime = Date.now();
+            const timeTaken = Math.floor((endTime - startTime) / 1000);
+
+            const performance = calculatePerformance(score, timeTaken, questions.length);
+            const ranking = getRanking(performance);
+
+            questionDiv.textContent = `Game Over!`;
+            answerInput.style.display = 'none';
+            document.querySelector('button').style.display = 'none';
+            timerDiv.textContent = '';
+            scoreDiv.textContent = '';
+
+            resultDiv.innerHTML = `
+        ✅ Your score: <b>${score}/${questions.length}</b><br>
+        ⏱ Time completed: <b>${timeTaken} seconds</b><br>
+        ⚡ Performance score: <b>${performance.toFixed(1)}</b>/100<br>
+        📊 You ranked higher than <b>${ranking}%</b> of players!<br><br>
+        🌍 <i>So…did you play the game wondering if a boy or girl is allowed to play?</i>
+ 
+
+  <p class="desc" margin-top: 50px;">
+        👱🏻‍♀️👩🏻‍🦰👩🏻👧🏽👧🏾
+    </p>
+
+       <p class="desc">
+        122 million girls worldwide are out of school. While global enrollment rates are nearly equal (92% for boys, 90% for girls), only 63% of girls in low-income countries complete primary school compared to 67% of boys.
+    </p>
+  <p class="desc" style="font-style: italic;">
+        Want to turn that curiosity into action? <br>Every click counts. 
+        Even if you're not donating.🔗
+    </p>
+        <div class="buttonqn">
+            <button class="button" onclick="window.location.href='../../NGOPROFILE.html'">🔍 Learn More</button>
+            <button class="button1" onclick="window.open('https://www.instagram.com/bytesizedimpact25/')">💖Our IG 💖 </button>
+        </div>
+
+ <p class="desc" style="font-style: italic; margin-top: 30px;">
+        Thanks for playing 🎮💖 Follow our journey, meet the team, and help us make impact bite-sized on social
+        media!
+    </p>
+
+    <p class="desc1">
+        <strong>All visual and audio assets belong to their rightful creators.</strong><br />
+        This project by Byte-Sized Impact is non-commercial and purely <br>for educational and awareness purposes.
+    </p>
+    `;
+        }
+
+        // Timer countdown
+        const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                endGame();
+            } else {
+                timerDiv.textContent = `Time: ${timeLeft}s`;
+                timeLeft--;
+            }
+        }, 1000);
+
+        showQuestion();
+    </script>
+</body>
+
+</html>
