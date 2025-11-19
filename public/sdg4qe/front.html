@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Kind of Student Are You?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: #e7f0fa;
+      color: #322981;
+      min-height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .Elements {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      width: 100vw;
+      justify-content: center;
+      padding-top: 3.5rem;
+      padding-bottom: 2rem;
+    }
+    .Text1 {
+      font-size: clamp(1.3rem, 4vw, 2.7rem);
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      margin-top: 0.5rem;
+      color: #322981;
+      text-shadow: 3px 3px 0 #fff, 5px 5px 6px rgba(0,0,0,0.18);
+      letter-spacing: 2px;
+      transition: color 0.6s ease-in-out, text-shadow 0.6s ease-in-out;
+      user-select: none;
+      cursor: default;
+    }
+    .Text1:hover {
+      color: #5078e8;
+      text-shadow:
+        0 0 4px #ddff75,
+        0 0 8px #fffd8d,
+        0 0 16px #f1df86,
+        0 0 20px #f0f644;
+    }
+    .Text2 {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      text-align: center;
+      color: #3762a5;
+      margin-bottom: 2.2rem;
+      text-shadow: 2px 2px 0 #fff, 2px 2px 6px rgba(55,98,165,0.2);
+      letter-spacing: 1.5px;
+    }
+    .middle-container {
+      width: 98vw;
+      max-width: 1150px;
+      min-height: 210px;
+      margin: 0 auto 1.4rem auto;
+      background: rgba(255,255,255,0.87);
+      border-radius: 25px;
+      box-shadow: 0 4px 24px rgba(55, 98, 165, 0.19);
+      padding: 1.4rem 2.1rem 1.1rem 2.1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: clamp(0.55rem, 0.95vw, 1rem);
+      color: #293083;
+      line-height: 1.7;
+      text-align: center;
+      animation: floatBox 2.2s ease-in-out infinite;
+      overflow: hidden;
+      position: relative;
+    }
+    @keyframes floatBox {
+        0% { box-shadow: 0 4px 24px rgba(55,98,165,0.13); transform: scale(1);}
+        50% { box-shadow: 0 8px 40px 4px rgba(55,98,165,0.25); transform: scale(1.018);}
+        100% { box-shadow: 0 4px 24px rgba(55,98,165,0.13); transform: scale(1);}
+    }
+    .button-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1.7rem;
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+    .start {
+      position: relative;
+      background: none;
+      border: none;
+      padding: 0;
+      margin-top: 0.2rem;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .start:hover::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 140px; height: 140px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 60% 30%, #ffe066 0 4px, transparent 5px),
+        radial-gradient(circle at 30% 70%, #8fd8fd 0 3px, transparent 4px),
+        radial-gradient(circle at 80% 80%, #fa67af 0 3.5px, transparent 5px),
+        radial-gradient(circle at 20% 30%, #ffe066 0 4px, transparent 5px),
+        radial-gradient(circle at 85% 45%, #8fd8fd 0 2.8px, transparent 4px);
+      animation: sparkle-pulse 1s linear;
+      z-index: 2;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes sparkle-pulse {
+      0% { opacity: 0; transform: scale(0.8) rotate(0deg);}
+      45% { opacity: 1; transform: scale(1.15) rotate(25deg); }
+      80% { opacity: 0.7; }
+      100% { opacity: 0; transform: scale(1.45) rotate(34deg);}
+    }
+    .start-img {
+      width: clamp(100px, 8vw, 160px);
+      height: auto;
+      display: block;
+    }
+    .start-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(0.7rem, 1.5vw, 1rem);
+      color: white;
+      pointer-events: none;
+      text-align: center;
+      width: 80%;
+      letter-spacing: 1.5px;
+      user-select: none;
+      text-shadow: 2px 2px 0 #322981, 0px 0px 6px #0003;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 5px rgba(55,98,165,0.5)); transform: scale(1);}
+      50% { filter: drop-shadow(0 0 20px rgba(55,98,165,0.8)); transform: scale(1.08);}
+    }
+    @media (max-width: 860px) {
+      .middle-container { width: 97vw; padding: 0.8rem 1vw; }
+    }
+    @media (max-width: 600px) {
+      .middle-container { width: 99vw; padding: 0.7rem 2vw; font-size: 0.56rem;}
+      .Text1 { font-size: 1.2rem; margin-top: 0.5rem; }
+      .Text2 { font-size: 0.93rem; }
+      .start-img { width: 100px;}
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Screen bg copy.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <div class="Elements">
+    <div>
+      <div class="Text1">What Kind of Student Are You?</div>
+      <div class="Text2">Find your school spirit style!</div>
+    </div>
+    <div class="middle-container"></div>
+    <div class="button-section">
+      <button class="start" onclick="startGame()">
+        <img src="Start.png" alt="Start Button" class="start-img" />
+        <span class="start-text">Start</span>
+      </button>
+    </div>
+  </div>
+  <script>
+    // Typing animation for the intro text
+    const textLines = [
+      "Ever wondered how you cruise through school?",
+      "Whether you’re a Chill Genius who somehow aces it,",
+      "the Overachiever? the Professional Freeloader? ",
+      "or just Aggressively Average and proud...this is your quiz!",
+      "",
+      "Dive in, discover your “student persona,” and claim",
+      "your spot in the wild jungle of classrooms everywhere.",
+      "Who knows? You might just realize you’re cooler (or sneakier) than you thought.",
+      "",
+      "Ready to find out if you’re the reason group projects exist?",
+      "Hit start!"
+    ];
+    let idx = 0, charIdx = 0, typingBox = document.querySelector('.middle-container');
+    typingBox.innerHTML = "";
+    function typeNextLine() {
+      if (idx < textLines.length) {
+        charIdx = 0;
+        let line = textLines[idx];
+        let span = document.createElement('span');
+        span.style.display = "block";
+        span.style.height = "1.8em";
+        typingBox.appendChild(span);
+        function typeChar() {
+          if (charIdx < line.length) {
+            span.innerHTML += line.charAt(charIdx);
+            charIdx++;
+            setTimeout(typeChar, 15);
+          } else {
+            idx++;
+            setTimeout(typeNextLine, 330);
+          }
+        }
+        typeChar();
+      }
+    }
+    typeNextLine();
+    function startGame() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = 'square';
+        o.connect(g).connect(ctx.destination);
+        g.gain.value = 0.07;
+        o.start();
+        o.frequency.setValueAtTime(620, ctx.currentTime);
+        o.frequency.setValueAtTime(240, ctx.currentTime + 0.11);
+        o.stop(ctx.currentTime + 0.18);
+      } catch(e) {}
+      // Navigate to Quiz4.html after beep 
+      window.location.href = "Quiz/Quiz4.Html";
+    }
+  </script>
+</body>
+</html>
