@@ -48,7 +48,7 @@ const QuizEntryDialog: React.FC<QuizEntryDialogProps> = ({ sdg, onStart, onBack 
       window.location.href = `/sdg2/front.html`; 
     } else if (sdg.id === 4) {
       // Redirect for SDG 4 (Quality Education)
-      window.location.href = `/sdg4/front.Html`; 
+      window.location.href = `/sdg4qe/front.html`; 
     } else if (sdg.id === 5) {
       // Redirect for SDG 5 (Gender Equality)
       window.location.href = `/sdg5/Front.html`; 
