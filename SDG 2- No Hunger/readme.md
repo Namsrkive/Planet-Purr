@@ -1,4 +1,4 @@
- SDG 2 — Zero Hunger
+Zero Hunger - Sustainable Development Goal (SDG 2)
 
 > **End hunger, achieve food security, improve nutrition, and promote sustainable agriculture.**
 
