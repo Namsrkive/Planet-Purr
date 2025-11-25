@@ -9,4 +9,4 @@
 - Improving small-scale farmer productivity  
 
 ### Why It Matters
-Zero Hunger aims to ensure that **no one sleeps hungry** and that our food systems remain **sustainable for future generations**.
+Zero Hunger aims to ensure that **no one sleeps hungry** and that our food system remain **sustainable for future generations**.
