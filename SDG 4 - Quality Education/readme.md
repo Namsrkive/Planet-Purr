@@ -1,4 +1,4 @@
-## SDG 4 — Quality Education
+##   Quality Education- SDG 4
 
 > **Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all.**
 
