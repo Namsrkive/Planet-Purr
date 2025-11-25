@@ -1,5 +1,5 @@
 
-# Byte-Sized Impact
+# Byte-Sized Impac
 
 ## Introduction to project
 
